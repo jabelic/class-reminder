@@ -1,6 +1,6 @@
 const scriptProp = PropertiesService.getScriptProperties().getProperties();
 type HttpMethod = "get" | "delete" | "patch" | "post" | "put";
-// 毎日9~10時にリマインド
+
 const postSlack = (message: string) => {
   var url = "https://slack.com/api/chat.postMessage";
   var postData: { [key: string]: any } = {
