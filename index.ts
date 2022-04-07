@@ -1,6 +1,7 @@
 const scriptProp = PropertiesService.getScriptProperties().getProperties();
 type HttpMethod = "get" | "delete" | "patch" | "post" | "put";
 
+/** post to slack */
 const postSlack = (message: string) => {
   var url = "https://slack.com/api/chat.postMessage";
   var postData: { [key: string]: any } = {
@@ -24,12 +25,13 @@ const getTodaysClassList = (date: Date) => {
         .flat(5)
     )
   );
-  // Logger.log(todaysClassList);
   return todaysClassList;
 };
+
 const getNextPeriod = (date: Date): number => {
   for (let i = 1; i < 8; i++) {
     /** アラート時間の3分前後に発火したらアラートが起動する。 */
+    // FIXME: hoursを跨ぐ場合に対応し切れていない
     const condition =
       date.getHours() == periodsInfo[i].alert.getHours() &&
       periodsInfo[i].alert.getMinutes() - 3 < date.getMinutes() &&
@@ -37,30 +39,26 @@ const getNextPeriod = (date: Date): number => {
     if (condition) return i;
   }
 };
-const test = () => {
-  const dateList = [
-    new Date("2022/04/04 18:00:00"), //FIXME: debug用 月曜18:00 3限
-    new Date("2022/04/04 19:40:00"), //FIXME: debug用 月曜19:40 4限
-    new Date("2022/04/05 18:00:00"), //FIXME: debug用 火曜18:00 3限
-    new Date("2022/04/05 19:40:00"), //FIXME: debug用 火曜19:40 4限
-    new Date("2022/04/06 18:00:00"), //FIXME: debug用 水曜18:00 3限
-    new Date("2022/04/06 19:40:00"), //FIXME: debug用 水曜19:40 4限
-    new Date("2022/04/07 18:00:00"), //FIXME: debug用 木曜18:00 3限
-    new Date("2022/04/07 19:40:00"), //FIXME: debug用 木曜19:40 4限
-    new Date("2022/04/08 18:00:00"), //FIXME: debug用 金曜18:00 3限
-    new Date("2022/04/08 19:40:00"), //FIXME: debug用 金曜19:40 4限
-    new Date("2022/04/02 08:30:00"), //FIXME: debug用 土曜8:30 1限
-    new Date("2022/04/02 10:10:00"), //FIXME: debug用 土曜10:10 2限
-    new Date("2022/04/02 12:30:00"), //FIXME: debug用 土曜12:30 3限
-    new Date("2022/04/02 14:15:00"), //FIXME: debug用 土曜14:15 4限
-  ];
-  dateList.forEach((date) => {
-    main(date);
+
+const customNotification = (date: Date) => {
+  const day = dates[date.getDay()];
+  const hours = date.getHours();
+  const minutes = date.getMinutes();
+  todos.map((it) => {
+    // FIXME: hoursを跨ぐ場合に対応し切れていない
+    const condition =
+      hours == it.times.getHours() &&
+      it.times.getMinutes() - 3 < date.getMinutes() &&
+      minutes < it.times.getMinutes() + 3;
+    if (condition) {
+      postSlack(it.title);
+    }
   });
 };
+
 /**
      * 5分ごとに起動
-     *　現在の時間を取得
+     * 現在の時間を取得
        次の授業がどの時限かを取得
        30分後の時刻を見て、開始時間があればその授業をとっているか確認
           - 次の授業の30分前にアラート
@@ -77,7 +75,7 @@ const main = (date: Date) => {
   const nextPeriod = getNextPeriod(date);
   Logger.log(nextPeriod); //1.0
   const nextClasses: string[] = timeTable[day][nextPeriod];
-  Logger.log(nextClasses); //[技術倫理, 情報セキュリティ特論]
+  Logger.log(nextClasses);
   let yourNextClass = "";
   ownClassList.map((it) => {
     // 各時限で1つしか授業をとっていないはず...
@@ -94,4 +92,5 @@ const main = (date: Date) => {
     }
   });
   postSlack(notifications);
+  customNotification(date);
 };

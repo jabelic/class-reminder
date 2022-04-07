@@ -31,31 +31,31 @@ const classInfomation = [
   {
     id: 0,
     className: "ソフトウェア工学特論",
-    description: "",
-    courseType: "",
+    description: "{}",
+    courseType: "{}",
   },
   {
     id: 1,
     className: "Javaプログラミング技法",
-    description: "",
-    courseType: "",
+    description: "{}",
+    courseType: "{}",
   },
   {
     id: 2,
     className: "プロジェクト管理特論1",
-    description: "",
-    courseType: "",
+    description: "{}",
+    courseType: "{}",
   },
   {
     id: 3,
     className: "コミュニケーション技術特論",
-    description: "",
-    courseType: "",
+    description: "{}",
+    courseType: "{}",
   },
   {
     id: 4,
     className: "情報セキュリティ特論",
-    description: "",
+    description: "{}",
     courseType: "ハイブリッド型",
   },
   {
@@ -123,3 +123,27 @@ const periodsInfo = {
     end: new Date("2000/01/01 21:40:00"),
   },
 };
+
+const todos = [
+  {
+    title:
+      "Javaプログラミング技法課題提出当日です。21:30までに提出してください。",
+    day: "sunday",
+    times: new Date("2000/01/01 17:00:00"),
+  },
+  {
+    title: "Javaプログラミング技法課題提出締め切り30分前です。",
+    day: "sunday",
+    times: new Date("2000/01/01 21:00:00"),
+  },
+  {
+    title: "情報セキュリティ特論確認テスト締め切り当日です。",
+    day: "wednesday",
+    times: new Date("2000/01/01 14:00:00"),
+  },
+  {
+    title: "情報セキュリティ特論確認テスト締め切り30分前です。",
+    day: "wednesday",
+    times: new Date("2000/01/01 18:00:00"),
+  },
+];
