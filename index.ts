@@ -47,11 +47,12 @@ const customNotification = (date: Date) => {
   todos.map((it) => {
     // FIXME: hoursを跨ぐ場合に対応し切れていない
     const condition =
+      day == it.day &&
       hours == it.times.getHours() &&
       it.times.getMinutes() - 3 < date.getMinutes() &&
       minutes < it.times.getMinutes() + 3;
     if (condition) {
-      postSlack(it.title);
+      postSlack(it.title + " \n<!channel>");
     }
   });
 };
