@@ -20,7 +20,8 @@ const getTodaysClassList = (date: Date) => {
   const day = dates[date.getDay()];
   const todaysClassList = Array.from(
     new Set(
-      Object.entries(timeTable[day])
+      // Object.entries(timeTableQ1[day])
+      Object.entries(timeTableQ2[day])
         .map((item) => item[1])
         .flat(5)
     )
@@ -75,7 +76,8 @@ const main = (date: Date) => {
   Logger.log(date.getDay()); // 6.0
   const nextPeriod = getNextPeriod(date);
   Logger.log(nextPeriod); //1.0
-  const nextClasses: string[] = timeTable[day][nextPeriod];
+  // const nextClasses: string[] = timeTableQ1[day][nextPeriod];
+  const nextClasses: string[] = timeTableQ2[day][nextPeriod];
   Logger.log(nextClasses);
   let yourNextClass = "";
   ownClassList.map((it) => {
@@ -87,11 +89,15 @@ const main = (date: Date) => {
   });
   Logger.log(yourNextClass);
   let notifications = "";
-  classInfomation.map((it) => {
-    if (it.className === yourNextClass) {
-      notifications = `30分後に${yourNextClass}が開始されます。この講義のタイプは${it.courseType}です。\ndescription: ${it.description}  \n<!channel>`;
-    }
-  });
-  postSlack(notifications);
-  customNotification(date);
+  // classInfomation.map((it) => {
+  //   if (it.className === yourNextClass) {
+  //     notifications = `30分後に${yourNextClass}が開始されます。この講義のタイプは${it.courseType}です。\ndescription: ${it.description}  \n<!channel>`;
+  //   }
+  // });
+
+  if(yourNextClass){
+    notifications = `30分後に${yourNextClass}が開始されます。  \n<!channel>`;
+    postSlack(notifications);
+    customNotification(date);
+  }
 };
