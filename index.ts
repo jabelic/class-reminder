@@ -77,27 +77,26 @@ const main = (date: Date) => {
   const nextPeriod = getNextPeriod(date);
   Logger.log(nextPeriod); //1.0
   // const nextClasses: string[] = timeTableQ1[day][nextPeriod];
-  const nextClasses: string[] = timeTableQ2[day][nextPeriod];
+  // const nextClasses: string[] = timeTableQ2[day][nextPeriod];
+  const nextClasses: string[] = timeTableQ3[day][nextPeriod];
   Logger.log(nextClasses);
   let yourNextClass = "";
   ownClassList.map((it) => {
-    // 各時限で1つしか授業をとっていないはず...
-    // いずれチェッカーを噛ませたい
+    // 各時限で1つしか授業をとっていないはず.
     if (Array.isArray(nextClasses) && nextClasses.includes(it)) {
       yourNextClass = it;
     }
   });
   Logger.log(yourNextClass);
   let notifications = "";
-  // classInfomation.map((it) => {
+  // classInformation.map((it) => {
   //   if (it.className === yourNextClass) {
   //     notifications = `30分後に${yourNextClass}が開始されます。この講義のタイプは${it.courseType}です。\ndescription: ${it.description}  \n<!channel>`;
   //   }
   // });
 
-  if(yourNextClass){
-    notifications = `30分後に${yourNextClass}が開始されます。  \n<!channel>`;
-    postSlack(notifications);
-    customNotification(date);
-  }
+  customNotification(date);
+  if (!yourNextClass) return;
+  notifications = `30分後に${yourNextClass}が開始されます。  \n<!channel>`;
+  postSlack(notifications);
 };
