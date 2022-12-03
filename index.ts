@@ -41,6 +41,10 @@ const getNextPeriod = (date: Date): number => {
   }
 };
 
+/** 授業以外のなにか通知する(todosに情報を書き込む)
+ * - 締め切り
+ * - other
+ */
 const customNotification = (date: Date) => {
   const day = dates[date.getDay()];
   const hours = date.getHours();
@@ -58,6 +62,12 @@ const customNotification = (date: Date) => {
   });
 };
 
+const getNextPeriodClasses = (
+  day:"sunday" | "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday", 
+  nextPeriod: number,
+  timeTable: TimeTable)=> timeTable[day][nextPeriod];
+
+
 /**
      * 5分ごとに起動
      * 現在の時間を取得
@@ -70,33 +80,23 @@ const index = () => {
   const date = new Date();
   main(date);
 };
+
+
 const main = (date: Date) => {
   const day = dates[date.getDay()];
-  Logger.log(day); // saturday
-  Logger.log(date.getDay()); // 6.0
   const nextPeriod = getNextPeriod(date);
-  Logger.log(nextPeriod); //1.0
-  // const nextClasses: string[] = timeTableQ1[day][nextPeriod];
-  // const nextClasses: string[] = timeTableQ2[day][nextPeriod];
-  const nextClasses: string[] = timeTableQ3[day][nextPeriod];
-  Logger.log(nextClasses);
-  let yourNextClass = "";
-  ownClassList.map((it) => {
-    // 各時限で1つしか授業をとっていないはず.
-    if (Array.isArray(nextClasses) && nextClasses.includes(it)) {
-      yourNextClass = it;
-    }
-  });
-  Logger.log(yourNextClass);
-  let notifications = "";
-  // classInformation.map((it) => {
-  //   if (it.className === yourNextClass) {
-  //     notifications = `30分後に${yourNextClass}が開始されます。この講義のタイプは${it.courseType}です。\ndescription: ${it.description}  \n<!channel>`;
-  //   }
-  // });
+
+  // const nextClasses: string[] = timeTableQ4[day][nextPeriod];
+  const nextClasses: string[] = getNextPeriodClasses(day, nextPeriod, timeTableQ4)
+
+
+  // 各時限で1つしか授業をとっていないはず.
+  const yourNextClass = ownClassList.find((it) => 
+     Array.isArray(nextClasses) && nextClasses.includes(it)
+  );
 
   customNotification(date);
   if (!yourNextClass) return;
-  notifications = `30分後に${yourNextClass}が開始されます。  \n<!channel>`;
+  const notifications = `30分後に${yourNextClass}が開始されます。  \n<!channel>`;
   postSlack(notifications);
 };

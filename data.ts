@@ -8,7 +8,41 @@ const dates = [
   "saturday",
 ] as const;
 
-const timeTableQ1 = {
+type TimeTable = {
+  readonly sunday: {
+    readonly 6: readonly string[];
+    readonly 7: readonly string[];
+  },
+  readonly monday: {
+    readonly 6: readonly string[];
+    readonly 7: readonly string[];
+  },
+  readonly tuesday: {
+    readonly 6: readonly string[];
+    readonly 7: readonly string[];
+  },
+  readonly wednesday: {
+    readonly 6: readonly string[];
+    readonly 7: readonly string[];
+  },
+  readonly thursday: {
+    readonly 6: readonly string[];
+    readonly 7: readonly string[];
+  },
+  readonly friday: {
+    readonly 6: readonly string[];
+    readonly 7: readonly string[];
+  },
+  readonly saturday: {
+    readonly 1: readonly string[];
+    readonly 2: readonly string[];
+    readonly 3: readonly string[];
+    readonly 4: readonly string[];
+    readonly 5: readonly string[];
+  }
+}
+
+const timeTableQ1:TimeTable = {
   sunday: { 6: [""], 7: [""] },
   monday: { 6: ["ソフトウェア工学特論"], 7: ["Javaプログラミング技法"] },
   tuesday: {
@@ -27,7 +61,7 @@ const timeTableQ1 = {
   },
 } as const;
 
-const timeTableQ2 = {
+const timeTableQ2:TimeTable = {
   sunday: { 6: [""], 7: [""] },
   monday: {
     6: ["情報セキュリティ特別講義1", "ネットワーク特論"],
@@ -52,7 +86,7 @@ const timeTableQ2 = {
   },
 } as const;
 
-const timeTableQ3 = {
+const timeTableQ3:TimeTable = {
   sunday: { 6: [""], 7: [""] },
   monday: {
     6: ["セキュアプログラミング特論", "情報ビジネス特別講義2"],
@@ -84,57 +118,96 @@ const timeTableQ3 = {
   },
 } as const;
 
-const classInformation = [
-  {
-    id: 0,
-    className: "ソフトウェア工学特論",
-    description: "{}",
-    courseType: "{}",
+const timeTableQ4:TimeTable = {
+  sunday: { 6: [""], 7: [""] },
+  monday: {
+    6: ["DESIGN [RE] THINKING", "情報セキュリティ特別講義2"],
+    7: ["ビッグデータ解析特論"],
   },
-  {
-    id: 1,
-    className: "Javaプログラミング技法",
-    description: "{}",
-    courseType: "{}",
+  tuesday: {
+    6: ["コラボレイティブ開発特論"],
+    7: ["プロジェクト管理特論3"],
   },
-  {
-    id: 2,
-    className: "プロジェクト管理特論1",
-    description: "{}",
-    courseType: "{}",
+  wednesday: {
+    6: [""],
+    7: ["情報システム特論1"],
   },
-  {
-    id: 3,
-    className: "コミュニケーション技術特論",
-    description: "{}",
-    courseType: "{}",
+  thursday: { 6: ["DESIGN [RE] THINKING", "情報セキュリティ特別講義2"], 7: ["ビッグデータ解析特論"] },
+  friday: {
+    6: ["コラボレイティブ開発特論"],
+    7: ["プロジェクト管理特論3"],
   },
-  {
-    id: 4,
-    className: "情報セキュリティ特論",
-    description: "{}",
-    courseType: "ハイブリッド型",
+  saturday: {
+    1: ["情報システム特論2"],
+    2: ["IoT開発特論", "情報システム特論2"],
+    3: ["情報システム特論1"],
+    4: [
+      "国際経営特論",
+      "セキュアシステム管理運用特論",
+      "情報ビジネス特別講義3",
+      "データサイエンス特別演習" // 創造
+    ],
+    5: [
+      "国際経営特論",
+      "セキュアシステム管理運用特論",
+      "情報ビジネス特別講義3",
+      "データサイエンス特別演習" // 創造
+    ]
   },
-  {
-    id: 5,
-    className: "情報アーキテクチャ特論1",
-    description: "",
-    courseType: "",
-  },
-  { id: 6, className: "技術倫理", description: "", courseType: "" },
-  {
-    id: 7,
-    className: "フレームワーク開発特論",
-    description: "",
-    courseType: "",
-  },
-  {
-    id: 8,
-    className: "サービスサイエンス特論",
-    description: "",
-    courseType: "",
-  },
-] as const;
+} as const;
+
+
+// const classInformation = [
+//   {
+//     id: 0,
+//     className: "ソフトウェア工学特論",
+//     description: "{}",
+//     courseType: "{}",
+//   },
+//   {
+//     id: 1,
+//     className: "Javaプログラミング技法",
+//     description: "{}",
+//     courseType: "{}",
+//   },
+//   {
+//     id: 2,
+//     className: "プロジェクト管理特論1",
+//     description: "{}",
+//     courseType: "{}",
+//   },
+//   {
+//     id: 3,
+//     className: "コミュニケーション技術特論",
+//     description: "{}",
+//     courseType: "{}",
+//   },
+//   {
+//     id: 4,
+//     className: "情報セキュリティ特論",
+//     description: "{}",
+//     courseType: "ハイブリッド型",
+//   },
+//   {
+//     id: 5,
+//     className: "情報アーキテクチャ特論1",
+//     description: "",
+//     courseType: "",
+//   },
+//   { id: 6, className: "技術倫理", description: "", courseType: "" },
+//   {
+//     id: 7,
+//     className: "フレームワーク開発特論",
+//     description: "",
+//     courseType: "",
+//   },
+//   {
+//     id: 8,
+//     className: "サービスサイエンス特論",
+//     description: "",
+//     courseType: "",
+//   },
+// ] as const;
 
 /** 自分の取っている授業のタイトル */
 const ownClassList = [
@@ -146,10 +219,12 @@ const ownClassList = [
   // "データベース特論",
   // "システムソフトウェア特論",
   // "システムプログラミング特論",
-  "セキュアプログラミング特論",
-  "データインテリジェンス特論",
-  "情報技術者倫理",
-  "アジャイル開発手法特論",
+  // "セキュアプログラミング特論",
+  // "データインテリジェンス特論",
+  // "情報技術者倫理",
+  // "アジャイル開発手法特論"
+  "ビッグデータ解析特論",
+  "データサイエンス特別演習"
 ] as const;
 
 const periodsInfo = {

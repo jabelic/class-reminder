@@ -16,6 +16,7 @@ const test = () => {
     new Date("2022/04/09 10:10:00"), //FIXME: debug用 土曜10:10 2限
     new Date("2022/04/09 12:30:00"), //FIXME: debug用 土曜12:30 3限
     new Date("2022/04/09 14:15:00"), //FIXME: debug用 土曜14:15 4限
+    new Date("2022/04/09 16:00:00"), //FIXME: debug用 土曜16:00 5限
     new Date("2022/04/10 17:00:00"), //FIXME: debug用 日曜17:00 Javaプログラミング技法課題締め切り当日
     new Date("2022/04/10 21:00:00"), //FIXME: debug用 日曜21:30 Javaプログラミング技法課題締め切り30分前
   ];
